@@ -2,22 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-public class three extends JFrame {
+public class Q4 extends JFrame {
     private JTextField statesField, initialStateField, acceptingStatesField, inputAlphabetField, transitionsField, verifyStringField;
     private JTextArea outputArea;
+    private JButton verifyButton;
 
-    public three() {
-        setTitle("Deterministic Finite State Machine Simulator");
+    public Q4() {
+        setTitle("Finite State Machine Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(600, 600);
         setLayout(new BorderLayout());
 
         // Input Panel
-        JPanel inputPanel = new JPanel(new GridLayout(8, 2));
+        JPanel inputPanel = new JPanel(new GridLayout(6, 2));
         inputPanel.add(new JLabel("Number of States:"));
         statesField = new JTextField();
         inputPanel.add(statesField);
@@ -31,33 +29,26 @@ public class three extends JFrame {
         inputPanel.add(acceptingStatesField);
 
         inputPanel.add(new JLabel("Enter Accepting States (comma-separated):"));
-        JTextField acceptingStatesInputField = new JTextField();
-        inputPanel.add(acceptingStatesInputField);
+        inputAlphabetField = new JTextField();
+        inputPanel.add(inputAlphabetField);
 
         inputPanel.add(new JLabel("Input Alphabet (comma-separated):"));
         inputAlphabetField = new JTextField();
         inputPanel.add(inputAlphabetField);
 
-        inputPanel.add(new JLabel("Transitions (semicolon-separated):"));
+        inputPanel.add(new JLabel("Enter Transitions (comma-separated):"));
         transitionsField = new JTextField();
         inputPanel.add(transitionsField);
 
-        // Verify Panel
-        inputPanel.add(new JLabel("Enter String to Verify:"));
-        verifyStringField = new JTextField();
-        inputPanel.add(verifyStringField);
-
-        // Align the input panel to the left
-        JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.add(inputPanel, BorderLayout.WEST);
-        add(leftPanel, BorderLayout.NORTH);
+        add(inputPanel, BorderLayout.NORTH);
 
         // Verify Panel
         JPanel verifyPanel = new JPanel(new FlowLayout());
-        verifyPanel.add(new JLabel("Enter String to Verify:"));
+        verifyPanel.add(new JLabel("Enter the String to Verify:"));
         verifyStringField = new JTextField(20);
         verifyPanel.add(verifyStringField);
-        JButton verifyButton = new JButton("Verify");
+
+        verifyButton = new JButton("Verify");
         verifyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,72 +62,57 @@ public class three extends JFrame {
         // Output Panel
         outputArea = new JTextArea();
         outputArea.setEditable(false);
+        outputArea.setFont(new Font("Arial", Font.PLAIN, 18)); // Increase font size
         JScrollPane scrollPane = new JScrollPane(outputArea);
         add(scrollPane, BorderLayout.SOUTH);
 
-        // Initialize GUI
+        // Display Image
+        ImageIcon imageIcon = new ImageIcon("transition4.png");  // Replace with the actual path to your image
+        Image scaledImage = imageIcon.getImage().getScaledInstance(330, 250, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(imageIcon);
+        add(imageLabel, BorderLayout.WEST);
+
         setVisible(true);
     }
 
     private void verifyString() {
         String inputString = verifyStringField.getText();
-
+    
         if (inputString.isEmpty()) {
             outputArea.setText("Please enter a string to verify.");
             return;
         }
-
+    
         // DFSM Simulator Logic
         String currentState = "q0";
-        int bCount = 0;
-
+    
         for (char symbol : inputString.toCharArray()) {
-            if (symbol == 'a') {
-                switch (currentState) {
-                    case "q0":
-                        currentState = "q2";
-                        break;
-                    case "q1":
-                        currentState = "q3";
-                        break;
-                    case "q2":
-                        currentState = "q0";
-                        break;
-                    case "q3":
-                        currentState = "q3";
-                        break;
-                }
-            } else if (symbol == 'b') {
-                bCount++;
-                switch (currentState) {
-                    case "q0":
-                        currentState = "q1";
-                        break;
-                    case "q1":
-                        currentState = "q1";
-                        break;
-                    case "q2":
-                        currentState = "q1";
-                        break;
-                    case "q3":
-                        currentState = "q3";
-                        break;
-                }
+            if (currentState.equals("q0")) {
+                currentState = (symbol == 'a') ? "q1" : "q3";
+            } else if (currentState.equals("q1")) {
+                currentState = (symbol == 'a') ? "q2" : "q1";
+            } else if (currentState.equals("q2")) {
+                currentState = (symbol == 'a') ? "q2" : "q1";
+            } else if (currentState.equals("q3")) {
+                currentState = (symbol == 'b') ? "q4" : "q3";
+            } else if (currentState.equals("q4")) {
+                currentState = (symbol == 'b') ? "q4" : "q3";
             }
         }
-
+    
         // Check if the final state is an accepting state
-        boolean isAccepted = (currentState.equals("q0") || currentState.equals("q1")) && bCount >= 1;
-
+        boolean isAccepted = currentState.equals("q2") || currentState.equals("q5");
+    
         // Display the result
         if (isAccepted) {
-            outputArea.setText("String accepted. Final state: " + currentState);
+            outputArea.setText("String accepted. ");
         } else {
-            outputArea.setText("String rejected. Final state: " + currentState);
+            outputArea.setText("String rejected.  ");
         }
     }
-
+    
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new FSMGUI());
+        SwingUtilities.invokeLater(Q4::new);
     }
 }
