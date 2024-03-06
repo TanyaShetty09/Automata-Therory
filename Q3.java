@@ -1,3 +1,5 @@
+//Design and Implement a GUI (Graphical user Interface) for simulating a DFSM which accept strings that start and end with same character. Analyze the output with different test cases.
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

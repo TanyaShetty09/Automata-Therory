@@ -1,3 +1,5 @@
+//Design and Implement a GUI (Graphical user Interface) for simulating a DFSM which accept Binary strings that starts or ends with “01”. Analyze the output with different test cases. 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

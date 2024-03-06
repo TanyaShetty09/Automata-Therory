@@ -1,3 +1,5 @@
+//Design and Implement a GUI (Graphical user Interface) for simulating a deterministic finite state machine (DFSM) which accept the language L = {a^nb^m | n mod 2=0, m ≥1}. Analyze the output with different test cases.
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

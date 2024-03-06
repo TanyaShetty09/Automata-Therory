@@ -1,3 +1,5 @@
+//Design and Implement a GUI (Graphical user Interface) for simulating a DFSM which accept the language L = {w | w {a, b}* and Na (w) mod 3 = Nb (w) mod 3}. Analyze the output with different test cases.
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

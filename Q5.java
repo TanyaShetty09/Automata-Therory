@@ -1,3 +1,5 @@
+//Design and Implement a GUI (Graphical user Interface) for simulating a DFSM which accept the language having all ‘a’ before all ‘b’. Analyze the output with different test cases. 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
